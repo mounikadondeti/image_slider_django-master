@@ -272,7 +272,7 @@
         .captureSpeak {
             overflow-y: auto;
             min-height: 550px;
-            height: 550px;
+            height: 850px;
         }
 
         .headings {
@@ -343,6 +343,8 @@
                                     <label for="Evaluator">Evaluation (2-3) mins)</label>
                                     <input type="radio" id="Prep" name="Speech" value="Prepared Speech (5-7 mins)" data-g="300" data-y="360" data-r="420">
                                     <label for="Prep">Prepared Speech (5-7 mins)</label>
+                                    <input type="radio" id="Breaker" name="Speech" value="Ice Breaker Speech (4-6 mins)" data-g="240" data-y="300" data-r="360">
+                                    <label for="Breaker">Ice Breaker Speech (4-6 mins)</label>
                                     <input type="radio" id="custom" name="Speech" value="Prepared Speech">
                                     <label for="custom">Custom Speech</label>
 
@@ -410,7 +412,7 @@
                             </div>
                             <div class="relative mt-3">
                                 <span class="inline-title">Usage</span>
-                                <textarea class="form-control "></textarea>
+                                <input type="text" class="form-control" id="Usage">
                             </div>
                             <div class="controlSection">
                                 <label class="container ml-lg-3">
@@ -425,6 +427,34 @@
                 </div>
 
             </div>
+            <div class="float-lg-left d-inline-block w30">
+                <div class="headings mt-2 text-center1">Idiom of the day</div>
+                <div class="relative mt-6">
+                    <span class="inline-title">Idiom of the day</span>
+                    <input type="text" class="form-control " id="Idiom">
+
+                </div>
+                <div class="relative mt-3">
+                    <span class="inline-title">Meaning</span>
+                    <input type="text" class="form-control" id="Meaning1">
+                </div>
+                <div class="relative mt-3">
+                    <span class="inline-title">Usage</span>
+                    <input type="text" class="form-control" id="Usage1">
+                </div>
+                <div class="controlSection">
+                    <label class="container ml-lg-3">
+                        Include Idiom of the Day in timer card
+                        <input type="checkbox" id="wod1">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
 
             <div class="card mt-3">
                 <div class="">
@@ -447,6 +477,7 @@
                         <span class="timerDisplay">00:00</span>
                         &nbsp;
                         <div class="wod hide"></div>
+                        <div class="wod1 hide"></div>
                     </div>
                     <div class="float-left d-inline-block captureSpeak w40">
                         <table class="table table-striped overlflow-auto" id="tblData">
@@ -519,7 +550,7 @@
         var speechName;
         $("#wod").on("change", function () {
             if ($(this).is(":checked")) {
-                $(".wod").html('<div class="text-center" style="padding:125px 0;"><h3 style="color: white;text-shadow: 1px 1px 1px #272727;"> Word of the Day: ' + $("#word").val() + '</h3><h5 style="font-size:16px">Meaning: ' + $("#Meaning").val() + '</h5></div>');
+                $(".wod").html('<div class="text-center" style="padding:125px 0;"><h3 style="color: white;text-shadow: 1px 1px 1px #272727;"> Word of the Day: ' + $("#word").val() + '</h3><h5 style="font-size:16px">Meaning: ' + $("#Meaning").val() + '</h5><h5 style="font-size:16px">Usage: ' + $("#Usage").val() + '</h5></div>');
                 $(".wod").removeClass("hide");
             }
             else {
@@ -527,6 +558,17 @@
                 $(".wod").html("");
             }
         });
+        $("#wod1").on("change", function () {
+          if ($(this).is(":checked")) {
+            $(".wod1").html('<div class="text-center" style="padding:30px 0;"><h3 style="color: white;text-shadow: 1px 1px 1px #272727;"> Idiom of the Day: ' + $("#Idiom").val() + '</h3><h5 style="font-size:16px">Meaning: ' + $("#Meaning1").val() + '</h5><h5 style="font-size:16px">Usage: ' + $("#Usage1").val() + '</h5></div>');
+             $(".wod1").removeClass("hide");
+           }
+          else {
+            (".wod1").addClass("hide");
+            $(".wod1").html("");
+           }
+        });
+
         $('[type="radio"]').on("change", function () {
             if ($(this).attr("id") == "custom") {
                 $("#customSection").removeClass("hide");

@@ -5,3 +5,6 @@ from .models import *
 
 def Timer(request):
 	return render(request, 'Timer.html')
+
+def Excel(request):
+	return render(request, 'excel.html')
