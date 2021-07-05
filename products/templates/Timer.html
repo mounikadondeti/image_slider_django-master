@@ -333,7 +333,7 @@
                 <div class="card p-3 mt-2" style="padding-bottom:0px !important;padding-top:0px !important">
 
                     <div class="row p-3">
-                        <div class="float-lg-left d-inline-block w60">
+                        <div class="float-lg-left d-inline-block w90">
                             <div class="controlSection">
                                 <div class="headings">Speech Type</div>
                                 <div class="radio-toolbar">
@@ -347,8 +347,6 @@
                                     <label for="Breaker">Ice Breaker Speech (4-6 mins)</label>
                                     <input type="radio" id="custom" name="Speech" value="Prepared Speech">
                                     <label for="custom">Custom Speech</label>
-
-
 
                                     <p class="hide text-danger" id="TypeError">Choose a Speech Type</p>
                                     <div id="customSection" class="hide mt-2">
@@ -371,11 +369,8 @@
                                 </div>
                             </div>
                             <div class="controlSection">
-                                <div class="d-inline-block" style="width:450px">
+                                <div class="d-inline-block" style="width:400px">
                                     <div class="headings mb-2">Speaker Name </div> <input type="text" id="speakerName" class="form-control d-block">
-
-
-
 
                                 </div>
 
@@ -559,13 +554,13 @@
             }
         });
         $("#wod1").on("change", function () {
-          if ($(this).is(":checked")) {
-            $(".wod1").html('<div class="text-center" style="padding:30px 0;"><h3 style="color: white;text-shadow: 1px 1px 1px #272727;"> Idiom of the Day: ' + $("#Idiom").val() + '</h3><h5 style="font-size:16px">Meaning: ' + $("#Meaning1").val() + '</h5><h5 style="font-size:16px">Usage: ' + $("#Usage1").val() + '</h5></div>');
-             $(".wod1").removeClass("hide");
+            if ($(this).is(":checked")) {
+                $(".wod1").html('<div class="text-center" style="padding:30px 0;"><h3 style="color: white;text-shadow: 1px 1px 1px #272727;"> Idiom of the Day: ' + $("#Idiom").val() + '</h3><h5 style="font-size:16px">Meaning: ' + $("#Meaning1").val() + '</h5><h5 style="font-size:16px">Usage: ' + $("#Usage1").val() + '</h5></div>');
+                $(".wod1").removeClass("hide");
            }
           else {
-            (".wod1").addClass("hide");
-            $(".wod1").html("");
+                $(".wod1").addClass("hide");
+                $(".wod1").html("");
            }
         });
 
