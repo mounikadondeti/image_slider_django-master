@@ -8,6 +8,8 @@
 
         gtag('config', 'UA-165362720-1');
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script src="../dist/jquery.table2excel.js"></script>
 
     <meta charset="utf-8">
     <title>TM Timer App</title>
@@ -149,6 +151,10 @@
             position: fixed;
             width: 0;
         }
+        .navbar-dark .navbar-brand {
+        color: #fff;
+        margin-top: -4px;
+}
 
         .inline-title {
             position: absolute;
@@ -185,12 +191,13 @@
         .radio-toolbar label {
             display: inline-block;
             background-color: #e2e2e2;
-            padding: 7px 10px;
+            padding: 7px 30px;
             font-size: 14px;
             border: 2px solid #a0a0a0;
             border-radius: 4px;
             font-weight: 500;
             cursor: pointer;
+            padding-right: 60px;
         }
 
         .form-control {
@@ -209,10 +216,13 @@
             background-color: #dfd;
             border-color: #4c4;
         }
+        .mb-2, .my-2 {
+        margin-bottom: .8rem!important;
+}
 
         .colorChange {
             display: block;
-            height: 520px;
+            height: 600px;
         }
 
         .g {
@@ -260,10 +270,10 @@
         .tmFooter {
             position: fixed;
             display: block;
-            top: 93%;
+            top: 94%;
             width: 100%;
             text-align: center;
-            background: #343a40;
+            background: #2d1e3e;
             color: white;
             font-size: 14px;
             padding: 10px;
@@ -319,11 +329,37 @@
         .relative {
             position: relative;
         }
+
+        .bg-dark{
+
+        background-color:#2d1e3e!important;
+        height: 50px;
+        }
+
+        .col-md-4 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    margin-top: -126px;
+
+}
+
+      .col-xs-6{
+      margin-left: 406px;
+
+      }
+
+      .col-xs-8{
+      margin-right:20px
+
+      }
+
     </style>
 <link rel="stylesheet" type="text/css" href="chrome-extension://pldlfgnilfdheajekfphjkjeooignhkc/css/general.css"></head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Timer</a>
+        <a class="navbar-brand" href="#">Time Toaster</a>
     </nav>
     <div class="container-fluid" style="font-size:14px !important">
 
@@ -333,7 +369,7 @@
                 <div class="card p-3 mt-2" style="padding-bottom:0px !important;padding-top:0px !important">
 
                     <div class="row p-3">
-                        <div class="float-lg-left d-inline-block w90">
+                        <div class="col-xs-12 col-md-12">
                             <div class="controlSection">
                                 <div class="headings">Speech Type</div>
                                 <div class="radio-toolbar">
@@ -383,10 +419,11 @@
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container " style="    display: inline-block;width: 250px;">
-                                    Start Timer Card in Full Screen Mode
+                                    Start Timer Card in Full Screen
                                     <input type="checkbox" id="FullScreen">
                                     <span class="checkmark"></span>
                                 </label>
+
                                 <!--button-->
                                 <!--<button class=" g btn btn-secondary  mr-3 color-black" id="Start"><i class="fas fa-play" style="padding:3px 15px"></i></button>
                                 <button class="btn btn-secondary r " id="Stop" disabled="disabled"><i class="fas fa-stop" style="padding:3px 15px" ></i></button>-->
@@ -394,7 +431,7 @@
                             </div>
                             <span class="hide TIP">Timer In Progress... <i class="fas fa-cog fa-spin"></i></span>
                         </div>
-                        <div class="float-lg-left d-inline-block w30">
+                        <div class="col-xs-6 col-md-4">
                             <div class="headings mt-2 text-center">Word of the Day</div>
                             <div class="relative mt-3">
                                 <span class="inline-title">Word Of the Day</span>
@@ -417,14 +454,9 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="float-lg-left d-inline-block w30">
-                <div class="headings mt-2 text-center1">Idiom of the day</div>
-                <div class="relative mt-6">
+                         <div class="col-xs-8 col-md-4">
+                <div class="headings mt-2 text-center">Idiom of the day</div>
+                <div class="relative mt-3">
                     <span class="inline-title">Idiom of the day</span>
                     <input type="text" class="form-control " id="Idiom">
 
@@ -443,6 +475,12 @@
                         <input type="checkbox" id="wod1">
                         <span class="checkmark"></span>
                     </label>
+                    </div>
+
+                </div>
+
+            </div>
+
                 </div>
             </div>
         </div>
@@ -478,57 +516,44 @@
                         <table class="table table-striped overlflow-auto" id="tblData">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col">Sl No</th>
                                     <th scope="col">Speech Type</th>
                                     <th scope="col">Speaker</th>
                                     <th scope="col">Time</th>
+                                    <th scope="col">Qualified</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody"></tbody>
                         </table>
-                    <button onclick="exportTableToExcel('tblData', 'members-data')">Export Table Data To Excel File</button>
+                    <button class="exportToExcel">Export to XLS</button>
 <script>
+			$(function() {
+				$(".exportToExcel").click(function(e){
+					var table = $(this).prev('.table2excel');
+					if(table && table.length){
+						var preserveColors = (table.hasClass('table2excel_with_colors') ? true : false);
+						$(table).table2excel({
+							exclude: ".noExl",
+							name: "Excel Document Name",
+							filename: "myFileName" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+							fileext: ".xls",
+							exclude_img: true,
+							exclude_links: true,
+							exclude_inputs: true,
+							preserveColors: preserveColors
+						});
+					}
+				});
 
-	function exportTableToExcel(tableID, filename = ''){
-    var downloadLink;
-    var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(tableID);
-    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-
-    // Specify file name
-    filename = filename?filename+'.xls':'excel_data.xls';
-
-    // Create download link element
-    downloadLink = document.createElement("a");
-
-    document.body.appendChild(downloadLink);
-
-    if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob(['\ufeff', tableHTML], {
-            type: dataType
-        });
-        navigator.msSaveOrOpenBlob( blob, filename);
-    }else{
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-
-        // Setting the file name
-        downloadLink.download = filename;
-
-        //triggering the function
-        downloadLink.click();
-    }
-}
-
-</script>
-
+			});
+		</script>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="tmFooter">
-        Developed by Senthil Kumar.
+        Developed by Senthil Kumar
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -545,7 +570,7 @@
         var speechName;
         $("#wod").on("change", function () {
             if ($(this).is(":checked")) {
-                $(".wod").html('<div class="text-center" style="padding:125px 0;"><h3 style="color: white;text-shadow: 1px 1px 1px #272727;"> Word of the Day: ' + $("#word").val() + '</h3><h5 style="font-size:16px">Meaning: ' + $("#Meaning").val() + '</h5><h5 style="font-size:16px">Usage: ' + $("#Usage").val() + '</h5></div>');
+                $(".wod").html('<div class="text-center" style="padding:1px 0;"><h3 style="color: white;text-shadow: 1px 1px 1px #272727;"> Word of the Day: ' + $("#word").val() + '</h3><h5 style="font-size:16px">Meaning: ' + $("#Meaning").val() + '</h5><h5 style="font-size:16px">Usage: ' + $("#Usage").val() + '</h5></div>');
                 $(".wod").removeClass("hide");
             }
             else {
