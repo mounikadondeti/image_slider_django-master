@@ -380,13 +380,13 @@
                             <div class="controlSection">
                                 <div class="headings">Speech Type</div>
                                 <div class="radio-toolbar">
-                                    <input type="radio" id="TT" name="Speech" value="Table Topics" data-b="30" data-g="60" data-y="90" data-r="120" data-o="150">
+                                    <input type="radio" id="TT" name="Speech" value="Table Topics" data-g="60" data-y="90" data-r="120">
                                     <label for="TT">Table Topics (1-2 mins)</label>
-                                    <input type="radio" id="Evaluator" name="Speech" value="Evaluation" data-b="90" data-g="120" data-y="150" data-r="180" data-o="210">
+                                    <input type="radio" id="Evaluator" name="Speech" value="Evaluation" data-g="120" data-y="150" data-r="180">
                                     <label for="Evaluator">Evaluation (2-3) mins)</label>
-                                    <input type="radio" id="Prep" name="Speech" value="Prepared Speech (5-7 mins)" data-b="270" data-g="300" data-y="360" data-r="420" data-o="450">
+                                    <input type="radio" id="Prep" name="Speech" value="Prepared Speech (5-7 mins)" data-g="300" data-y="360" data-r="420">
                                     <label for="Prep">Prepared Speech (5-7 mins)</label>
-                                    <input type="radio" id="Breaker" name="Speech" value="Ice Breaker Speech (4-6 mins)" data-b="210" data-g="240" data-y="300" data-r="360" data-o="390">
+                                    <input type="radio" id="Breaker" name="Speech" value="Ice Breaker Speech (4-6 mins)" data-g="240" data-y="300" data-r="360">
                                     <label for="Breaker">Ice Breaker Speech (4-6 mins)</label>
                                     <input type="radio" id="custom" name="Speech" value="Prepared Speech">
                                     <label for="custom">Custom Speech</label>
@@ -395,12 +395,6 @@
                                     <div id="customSection" class="hide mt-2">
                                         <div class="d-inline-block">
                                             Green <input type="number" id="cust-g" class="form-control numberBox d-inline-block">
-                                        </div>
-                                        <div class="d-inline-block  ml-lg-5">
-                                            Blue <input type="number" id="cust-b" class="form-control numberBox  d-inline-block">
-                                        </div>
-                                         <div class="d-inline-block  ml-lg-5">
-                                            Orange <input type="number" id="cust-0" class="form-control numberBox  d-inline-block">
                                         </div>
                                         <div class="d-inline-block  ml-lg-5">
                                             Yellow <input type="number" id="cust-y" class="form-control numberBox  d-inline-block">
@@ -680,14 +674,12 @@
                 $("#IncrementalError").addClass("hide");
                 var speech = $('[name="Speech"]:checked');
                 var typeOf = speech.attr("id");
-                var green, yellow, red, blue, orange;
+                var green, yellow, red;
 
                 if (typeOf == "custom") {
                     green = parseFloat($("#cust-g").val()) * 60;
                     yellow = parseFloat($("#cust-y").val()) * 60;
                     red = parseFloat($("#cust-r").val()) * 60;
-                    blue = parseFloat($("#cust-b").val()) * 30;
-                    orange = parseFloat($("#cust-o").val()) * 30;
 
                     speechName = $('[name="Speech"]:checked').val() + ' (' + $("#cust-g").val() + '-' + $("#cust-r").val() + ' mins)';
                 }
@@ -696,8 +688,6 @@
                     green = speech.attr("data-g");
                     yellow = speech.attr("data-y");
                     red = speech.attr("data-r");
-                    blue = speech.attr("data-b");
-                    orange = speech.attr("data-o")
                     speechName = $('[name="Speech"]:checked').val();
                 }
                 $(this).attr("disabled", "disabled");
@@ -712,43 +702,35 @@
                     $(".Minimize").removeClass("hide");
                 }
                 var kickoff = new Date();
+
+
+
+
+
+
+
                 timer = setInterval(function () {
                     var now = new Date();
                     diff = parseInt((now - kickoff) / 1000);
                     if (diff == green) {
                         $(".colorChange").removeClass("b").addClass("g");
                         cardColor = 'gC';
+                        qualified = "&#10004;"
                     }
                     else if (diff == yellow) {
                         $(".colorChange").removeClass("g").addClass("y");
                         cardColor = 'yC';
+                        qualified = "&#10004;"
                     }
                     else if (diff == red) {
                         $(".colorChange").removeClass("y").addClass("r");
                         cardColor = 'rC';
+                        qualified = "&#10004;"
                     }
-
-                    else if (diff < blue) {
+                    else if (diff < green) {
                         cardColor = 'bC';
                         qualified = "&#x274C;"
                     }
-                    else if (diff > blue && diff < green) {
-                        cardColor = 'bC';
-                        qualified = "&#10004;"
-                    }
-                     else if (diff > green && diff < yellow) {
-                        cardColor = 'gc';
-                        qualified = "&#10004;"
-                    }
-                    else if (diff > yellow && diff < red) {
-                        cardColor = 'yc';
-                        qualified = "&#10004;"
-                    }
-                    else if (diff > red || diff > orange) {
-                        cardColor = 'rc';
-                        qualified = "&#x274C;"
-                    }
-
                     if (!$("#hideTimer").is(":checked"))
                         $(".timerDisplay").html(new Date(1000 * diff).toISOString().substr(14, 5));
 
